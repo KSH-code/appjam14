@@ -73,9 +73,7 @@ module.exports.generatePdf = (req, res) => {
         if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
         fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
             if(e) res.status(400).end(), console.error(e);
-            else {
-                
-            }
+            else res.status(200).end()
         });
     });
 
