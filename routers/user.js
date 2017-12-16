@@ -10,4 +10,6 @@ module.exports = app => {
     app.get('/schoolList', schoolController.getSchoolList);
     // pdf 저장
     app.post('/pdf', generatePdf.generatePdf);
+    // user 채택 당한거 개수
+    app.post('/chkedList', loginController.getCheckdList);
 }
