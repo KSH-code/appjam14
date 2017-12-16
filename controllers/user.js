@@ -23,11 +23,10 @@ module.exports.register = function(req, res) {
     else if(token == undefined) error = true, error_msg = '잘못된 접근입니다.';
 
     if(error){
-        res.json({
+        return res.json({
             error,
             error_msg
         });
-        return;
     }
 
     pw = pw || '';
