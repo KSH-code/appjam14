@@ -56,8 +56,8 @@ module.exports.loadList = function(req, res) {
 
 module.exports.writeComment = function(req, res){
     let { writer, content } = req.body;
-    let { postIdx } = req.params;
-    con.query('insert into `comments` (`post_idx`, `content`, `writer`, `created_date`) values (?, ?, ?, now())', [postIdx, content, writer], (e, rs) => {
+    let { idx } = req.params;
+    con.query('insert into `comments` (`post_idx`, `content`, `writer`, `created_date`) values (?, ?, ?, now())', [idx, content, writer], (e, rs) => {
         if(!e || rs == undefined || !rs.length) res.status(400).end();
         else res.status(200).end();
     });
