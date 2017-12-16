@@ -82,7 +82,6 @@ file {
         idx: Integer()
         content: String(글 내용)
         writer: String(작성자 닉네임)
-        view: Integer(조회수)
         check: Integer(채택을 했는가 ? 0 : 1)
         subject: String(과목)
         created_date: String(작성자 닉네임)
