@@ -22,24 +22,27 @@ module.exports.register = function(req, res) {
     else if(name == undefined) error = true, error_msg = '잘못된 접근입니다.';
     else if(token == undefined) error = true, error_msg = '잘못된 접근입니다.';
 
-    if(error){
-        return res.json({
-            error,
-            error_msg
-        });
+    if(error) {
+        return res.json({ error, error_msg });
     }
 
     pw = pw || '';
-    con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
-        error = e != undefined;
-        if(!error) res.status(200).json({error: !error}).end();
-        else{
-            console.error(e);
-            error_msg = '알 수 없는 오류';
-            res.json({
-                error,
-                error_msg
+    con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
+        if(rs != undefined || token != 1 && rs.length){
+            res.status(200).json({ error: error }).end();
+        }else if(rs == undefined || !rs.length){
+            con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
+                error = e != undefined;
+                if(!error) res.status(200).json({ error: error }).end();
+                else{
+                    console.error(e);
+                    error_msg = '알 수 없는 오류';
+                    res.json({ error, error_msg });
+                }
             });
+        }else{
+            error = true, error_msg = '중복된 아이디 입니다.';
+            res.json({ error, error_msg });
         }
     });
 }

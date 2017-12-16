@@ -50,7 +50,7 @@
     plcae: String(학교지역)
 }
 ```
-# /write
+# /write (post)
 ## request body
 ```
 {
@@ -58,7 +58,24 @@
     writer: String(닉네임)
     title: String(제목)
     content: String(내용)
-    content: String(내용)
-    content: String(내용)
+    subject: String(과목)
 }
+file {
+    img: file
+}
+```
+## response
+```
+{
+    error: bool
+    error_msg: String(에러시 메세지)
+}
+```
+```
+    status 200 성공
+```
+# /
+## request
+```
+
 ```
