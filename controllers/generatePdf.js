@@ -80,6 +80,6 @@ module.exports.generatePdf = (req, res) => {
             });
         });
 
-    }
+    });
 }
 
