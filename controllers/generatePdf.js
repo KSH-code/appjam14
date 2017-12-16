@@ -6,9 +6,9 @@ module.exports = (_app, _con) => {
 }
 
 module.exports.generatePdf = (req, res) => {
-    let count = rs[0].count;
     let { name, schoolName, id } = req.body;
     con.query('select count(*) as count from `comments` where `writer` = ? and `check` = 1', [name], (e, rs) => {
+        let count = rs[0].count;
         // if(e) console.error(e), res.status(400).end();
         let startHtml = 
         `
