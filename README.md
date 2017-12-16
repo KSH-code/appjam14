@@ -77,6 +77,10 @@ file {
 # /
 ## request
 ```
+
+```
+## response
+```
 {
     list:[{
         idx: Integer()
@@ -88,8 +92,4 @@ file {
         img: Integer(있으면 1 없으면 0)
     }]
 }
-```
-## response
-```
-
 ```
