@@ -41,7 +41,7 @@ module.exports.loadList = function(req, res) {
         if(e) console.error(e);
         if(!e){
             for(var { idx, content, writer, check, subject, created_date } of rs){
-                list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img:0, commentCount: rss[0].count });
+                list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img:0, commentCount: rs[0].count });
             }
             res.json({ list });
         }
