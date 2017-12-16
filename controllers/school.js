@@ -11,7 +11,7 @@ module.exports.getSchoolList = function(req, res){
             }
             res.json(jsonData);
         }else{
-            res.status(400);
+            res.status(400).end();
         }
     });
 }

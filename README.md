@@ -97,8 +97,15 @@ file {
 # /board/:idx (post) 댓글 작성
 ## request
 ```
-
+{
+    content: String(내용)
+    writer: String(작성자 닉네임)
+}
 ```
 ## response
 ```
+    200 성공
+```
+```
+    400 실패
 ```

@@ -53,3 +53,12 @@ module.exports.loadList = function(req, res) {
     });
 
 }
+
+module.exports.commentWrite = function(req, res){
+    let { writer, content } = req.body;
+    let { postIdx } = req.params;
+    con.query('insert into `comments` (`post_idx`, `content`, `writer`, `created_date`) values (?, ?, ?, now())', [postIdx, content, writer], (e, rs) => {
+        if(!e) res.status(400).end();
+        else res.status(200).end();
+    });
+}
