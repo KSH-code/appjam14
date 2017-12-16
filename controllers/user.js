@@ -27,7 +27,7 @@ module.exports.register = function(req, res) {
     }
 
     pw = pw || '';
-    con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
+    con.query('select name, id from `users` where `id` = ? or `name` = ?', [id, name], (e, rs) => {
         if(rs != undefined && token == 1 && rs.length){
             res.status(200).json({ error: error }).end();
         }else if(rs == undefined || !rs.length){
@@ -41,7 +41,8 @@ module.exports.register = function(req, res) {
                 }
             });
         }else{
-            error = true, error_msg = '중복된 아이디 입니다.';
+            if(rs[0].id == id) error = true, error_msg = '중복된 아이디 입니다.';
+            if(rs[0].name == name) error = true, error_msg = '중복된 닉네임 입니다.';
             res.json({ error, error_msg });
         }
     });
