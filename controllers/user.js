@@ -4,7 +4,6 @@ var app, con;
 module.exports = (_app, _con) => {
     [app, con] = [_app, _con];
 }
-
 module.exports.isLogin = function(req, res, next){
     let { id } = req.body;
     con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
