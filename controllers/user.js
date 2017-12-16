@@ -13,6 +13,7 @@ module.exports.isLogin = function(req, res, next){
 }
 
 module.exports.register = function(req, res) {
+    id=id&pw=pw&token=0&name=idid&schoolCode=316
     let { id, pw, token, name, schoolCode } = req.body;
     let error = false, error_msg = '';
     if(id == undefined && token == 0) error = true, error_msg = '아이디가 입력되지 않았습니다.';
@@ -32,7 +33,7 @@ module.exports.register = function(req, res) {
     pw = pw || '';
     con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
         error = e != undefined;
-        if(!e) res.status(200);
+        if(!error) res.status(200);
         else{
             console.error(e);
             error_msg = '알 수 없는 오류';
