@@ -31,25 +31,22 @@ module.exports.write = function(req, res) {
 }
 
 module.exports.loadList = function(req, res) {
+    var list = [], cnt = 0;    
     new Promise((resolve, reject) => {
-        con.query('select * from `board`', (e, rs) => {
+        con.query('select COUNT(c) as count, a.idx, a.content, a.writer, a.check, a.subject, a.created_date from `board` as `a` INNER JOIN `comments` as `c` ON `a`.idx = `c`.post_idx GROUP BY `a`.idx', (e, rs) => {
             resolve({ e, rs });
         });
     }).then(data => {
         let { e, rs } = data;
         if(e) console.error(e);
         if(!e){
-            var list = [], cnt = 0;
             for(var { idx, content, writer, check, subject, created_date } of rs){
-                con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rss) => {
-                    let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
-                    list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img, commentCount: rss[0].count });
-                    cnt++;
-                    if(cnt == rs.length) res.json({ list });
-                });
+                list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img:0, commentCount: rss[0].count });
             }
-            if(cnt == 0) res.json({ list });
+            res.json({ list });
         }
+    }).then(f => {
+        res.json({ list });
     });
 
 }
