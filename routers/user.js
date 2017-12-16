@@ -11,5 +11,5 @@ module.exports = app => {
     // pdf 저장
     app.post('/pdf', generatePdf.generatePdf);
     // user 채택 당한거 개수
-    app.get('/chkedList', loginController.getCheckdList);
+    app.get('/checkList', loginController.getCheckdList);
 }
