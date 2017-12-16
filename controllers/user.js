@@ -52,12 +52,12 @@ module.exports.login = function(req, res) {
     let { id, pw, token } = req.body;
     if(token){
         con.query('select * from `users` where id = ? and token = ?', [id, token], (e, rs) => {
-            if(rs) res.status(200).end();
+            if(rs.length) res.status(200).end();
             else res.status(400).end();
         });
     }else{
         con.query('select * from `users` where id = ? and pw = ? and token = ?', [id, pw, token], (e, rs) => {
-            if(rs) res.status(200).end();
+            if(rs.length) res.status(200).end();
             else res.status(400).end();
         });
     }
