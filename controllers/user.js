@@ -63,6 +63,15 @@ module.exports.login = function(req, res) {
     }
 }
 
+module.exports.getCheckdList = function(req, res){
+    let { writer } = req.query;
+
+    con.query('select count(*) as count from `comments` where `writer` = ? and `check` = 1', [writer], (e, rs) => {
+        if(e) console.error(e), res.status(400).end();
+        else res.status(200).json({ count: rs[0].count }).end();
+    });
+}
+
 function setInformation(id, name, schoolName){
     con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
         let { idx } = rs.idx;

@@ -76,8 +76,7 @@ module.exports.generatePdf = (req, res) => {
         fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
             if(e) res.status(400).end(), console.error(e);
             else {
-                let pdf = new PDFKit('file', `${dir}${id}/temp.html`);
-                pdf.toFile(`${dir}${id}/auth.pdf`, function (err, file) {});
+                
             }
         });
     });

@@ -156,3 +156,18 @@ file {
 ```
     400 실패
 ```
+# /chkecList (get) 채택당한 리스트
+## request
+```
+{
+    writer: String(닉네임)
+}
+```
+## response
+```
+    200 성공
+    count: Integer()
+```
+```
+    400 실패
+```
