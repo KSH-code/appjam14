@@ -33,7 +33,7 @@ module.exports.write = function(req, res) {
 module.exports.loadList = function(req, res) {
     var list = [], cnt = 0;    
     new Promise((resolve, reject) => {
-        con.query('select COUNT(c) as count, a.idx, a.content, a.writer, a.check, a.subject, a.created_date from `board` as `a` INNER JOIN `comments` as `c` ON `a`.idx = `c`.post_idx GROUP BY `a`.idx', (e, rs) => {
+        con.query('select COUNT(c.post_idx) as count, a.idx, a.content, a.writer, a.check, a.subject, a.created_date from `board` as `a` INNER JOIN `comments` as `c` ON `a`.idx = `c`.post_idx GROUP BY `a`.idx', (e, rs) => {
             resolve({ e, rs });
         });
     }).then(data => {
