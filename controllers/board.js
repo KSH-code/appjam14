@@ -1,3 +1,5 @@
+import { resolve } from 'dns';
+
 var app, con;
 const fs = require('fs');
 const dir = __dirname.substr(0, __dirname.length - 11);
@@ -31,15 +33,24 @@ module.exports.write = function(req, res) {
 }
 
 module.exports.loadList = function(req, res) {
-    con.query('select * from `board`', (e, rs) => {
+    new Promise((resolve, reject) => {
+        con.query('select * from `board`', (e, rs) => {
+            resolve({ e, rs });
+        });
+    }).then(data => {
+        let { e, rs } = data;
         if(e) console.error(e);
         if(!e){
-            let list = [];
+            let list = [], cnt = 0;
             for(let { idx, content, writer, check, subject, created_date } of rs){
-                let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
-                list.push({ idx, content, writer, check, subject, created_date, img });
+                con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rs) => {
+                    let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
+                    list.push({ idx: idx.split("T")[0], content, writer, check, subject, created_date, img, commentCount: rs[0].count });
+                    cnt++;
+                    if(cnt == rs.length) res.json({ list });
+                });
             }
-            res.json({ list });
         }
     });
+
 }
