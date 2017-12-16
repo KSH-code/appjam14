@@ -1,6 +1,6 @@
 var app, con;
 const fs = require('fs');
-var htmlToPdf = require('html-to-pdf');
+var HTMLToPDF = require('html5-to-pdf');
 
 module.exports = (_app, _con) => {
     [app, con] = [_app, _con];
@@ -11,7 +11,7 @@ module.exports.generatePdf = (req, res) => {
     let startHtml = 
 `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="utf-8">
     <title>Talk학 인증서</title>
@@ -70,17 +70,13 @@ module.exports.generatePdf = (req, res) => {
 `;
     let dir = __dirname;
     dir = dir.substr(0, dir.length - 12) + '/public/';
-    fs.mkdir(`${dir}${id}`, (e) => {
-        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);        
-        htmlToPdf.setDebug(true);
-        htmlToPdf.setInputEncoding("utf-8");
-        htmlToPdf.setOutputEncoding("utf-8");
-        htmlToPdf.convertHTMLString(startHtml.toString(), `${dir}${id}/auth.pdf`,
-        function (error, success) {
-            if (error) {
-                res.status(400).end();
-            } else {
-                res.status(200).end();
+    fs.mkdir(`${dir}${id}`, (e) =>{
+        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
+        fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
+            if(e) res.status(400).end(), console.error(e);
+            else {
+                new HTMLToPDF({ inputPath: `${dir}${id}/temp.html`.toString(), outputPath: `${dir}${id}/auth.pdf`.toString(),
+                }).build((error) => {});
             }
         });
     });
