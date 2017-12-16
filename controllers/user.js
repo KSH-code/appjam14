@@ -28,7 +28,7 @@ module.exports.register = function(req, res) {
 
     pw = pw || '';
     con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
-        if(rs != undefined || token != 1 && rs.length){
+        if(rs != undefined && token == 1 && rs.length){
             res.status(200).json({ error: error }).end();
         }else if(rs == undefined || !rs.length){
             con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
