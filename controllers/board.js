@@ -36,8 +36,7 @@ module.exports.loadList = function(req, res) {
         if(!e){
             let list = [];
             for(let { idx, content, writer, check, subject, created_date } of rs){
-                let img = 0;
-                img = fs.readFileSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
+                let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
                 list.push({ idx, content, writer, check, subject, created_date, img });
             }
             res.json({ list });

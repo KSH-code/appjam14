@@ -93,3 +93,11 @@ file {
     }]
 }
 ```
+# /board/:idx (post) 댓글 작성
+## request
+```
+
+```
+## response
+```
+```
