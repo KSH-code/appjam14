@@ -10,5 +10,5 @@ module.exports = app => {
     // 댓글 작성
     app.post('/board/:idx', userController.isLogin, boardController.writeComment);
     // 댓글 채택
-    app.post('/write/:idx/:commentIdx', userController.isLogin, boardController.checkComment);
+    app.post('/board/:idx/:commentIdx', userController.isLogin, boardController.checkComment);
 }
