@@ -156,7 +156,7 @@ file {
 ```
     400 실패
 ```
-# /chkecList (get) 채택당한 리스트
+# /checkList (get) 채택당한 리스트
 ## request
 ```
 {
