@@ -43,14 +43,13 @@ module.exports.loadList = function(req, res) {
             for(let { idx, content, writer, check, subject, created_date } of rs){
                 con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rs) => {
                     let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
-                    list.push({ idx, content, writer, check, subject, created_date: created_date.split("T")[0], img, commentCount: rs[0].count });
+                    list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img, commentCount: rs[0].count });
                     cnt++;
-                    if(cnt == rs.length) resolve(list);
+                    if(cnt == rs.length) res.json({ list });
                 });
             }
+            if(rs.length == 0) res.json({ list });
         }
-    }).then(list => {
-        res.json({ list });
     });
 
 }
