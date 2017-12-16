@@ -40,10 +40,10 @@ module.exports.loadList = function(req, res) {
         if(e) console.error(e);
         if(!e){
             var list = [], cnt = 0;
-            for(let { idx, content, writer, check, subject, created_date } of rs){
-                con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rs) => {
+            for(var { idx, content, writer, check, subject, created_date } of rs){
+                con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rss) => {
                     let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
-                    list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img, commentCount: rs[0].count });
+                    list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img, commentCount: rss[0].count });
                     cnt++;
                     if(cnt == rs.length) res.json({ list });
                 });
