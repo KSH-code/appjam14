@@ -6,5 +6,4 @@ app.use(bodyParser.json());
 
 const routers = require('./routers/index')(app);
 const controllers = require('./controllers/index')(app);
-
 app.listen(4994);

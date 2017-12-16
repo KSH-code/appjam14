@@ -1,9 +1,11 @@
 var app, con;
+
+
 module.exports = (_app, _con) => {
     [app, con] = [_app, _con];
 }
 
-exports.isLogin = function(req, res, next){
+module.exports.isLogin = function(req, res, next){
     let { id } = req.body;
     con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
         if(rs) next();
@@ -11,7 +13,7 @@ exports.isLogin = function(req, res, next){
     });
 }
 
-exports.register = function(req, res) {
+module.exports.register = function(req, res) {
     let { id, pw, token, name, schoolCode } = req.body;
     let error = false, error_msg = '';
     if(id == undefined && token == 0) error = true, error_msg = '아이디가 입력되지 않았습니다.';
@@ -44,7 +46,7 @@ exports.register = function(req, res) {
     });
 }
 
-exports.login = function(req, res) {
+module.exports.login = function(req, res) {
     let { id, pw, token } = req.body;
     if(token){
         con.query('select * from `users` where id = ?', [id], (e, rs) => {
