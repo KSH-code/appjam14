@@ -32,7 +32,7 @@ module.exports.register = function(req, res) {
     pw = pw || '';
     con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
         error = e != undefined;
-        if(!error) res.status(200).end();
+        if(!error) res.status(200).json({error: !error}).end();
         else{
             console.error(e);
             error_msg = '알 수 없는 오류';

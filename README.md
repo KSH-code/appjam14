@@ -50,3 +50,15 @@
     plcae: String(학교지역)
 }
 ```
+# /write
+## request body
+```
+{
+    id: String(token or 진짜아이디)
+    writer: String(닉네임)
+    title: String(제목)
+    content: String(내용)
+    content: String(내용)
+    content: String(내용)
+}
+```
