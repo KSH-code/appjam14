@@ -13,7 +13,7 @@ module.exports.generatePdf = (req, res) => {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Talk학 인증서</title>
     <style>
         *{
@@ -70,28 +70,17 @@ module.exports.generatePdf = (req, res) => {
 `;
     let dir = __dirname;
     dir = dir.substr(0, dir.length - 12) + '/public/';
-    fs.mkdir(`${dir}${id}`, (e) =>{
-        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
-        fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
-            if(e) res.status(400).end(), console.error(e);
-            else {
-                htmlToPdf.setInputEncoding('UTF-8');
-                htmlToPdf.setOutputEncoding('UTF-8');
-                htmlToPdf.convertHTMLFile(`${dir}${id}/temp.html`, `${dir}${id}/auth.pdf`,
-                function (error, success) {
-                    if (error) {
-                        console.log('Oh noes! Errorz!');
-                        console.log(error);
-                        res.status(400).end();
-                    } else {
-                        setInterval(function(){
-                            if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);        
-                        }, 1000 * 60 * 5);
-                        console.log('Woot! Success!');
-                        console.log(success);
-                        res.status(200).end();
-                    }
-                });
+    fs.mkdir(`${dir}${id}`, (e) => {
+        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);        
+        htmlToPdf.setDebug(true);
+        htmlToPdf.setInputEncoding("utf-8");
+        htmlToPdf.setOutputEncoding("utf-8");
+        htmlToPdf.convertHTMLString(startHtml.toString(), `${dir}${id}/auth.pdf`,
+        function (error, success) {
+            if (error) {
+                res.status(400).end();
+            } else {
+                res.status(200).end();
             }
         });
     });

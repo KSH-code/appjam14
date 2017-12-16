@@ -67,8 +67,8 @@ module.exports.loadComments = function(req, res){
     let { idx } = req.params;
     con.query('select * from `comments` where `post_idx` = ?', [idx], (e, rs) => {
         let list = [];
-        for(let { content, writer, check, created_date } of rs){
-            list.push({ content, writer, check, created_date: created_date.toISOString().split("T")[0] });
+        for(let { content, writer, check, created_date, idx } of rs){
+            list.push({ idx, content, writer, check, created_date: created_date.toISOString().split("T")[0] });
         }
         res.json({ list });
     });

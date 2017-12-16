@@ -104,6 +104,7 @@ file {
 ```
 {
     list: [{
+        idx: String(내용)
         content: String(내용)
         writer: String(작성자 닉네임)
         check: Integer(0 기본 1 채택됨)
