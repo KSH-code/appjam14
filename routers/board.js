@@ -9,4 +9,6 @@ module.exports = app => {
     app.get('/write/:idx', boardController.loadComments);
     // 댓글 작성
     app.post('/write/:idx', userController.isLogin, boardController.writeComment);
+    // 댓글 채택
+    app.post('/write/:idx/:commentIdx', userController.isLogin, boardController.checkComment);
 }

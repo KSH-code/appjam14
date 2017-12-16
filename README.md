@@ -122,3 +122,17 @@ file {
 ```
     400 실패
 ```
+# /board/:idx/:commentIdx (post) 댓글 채택
+## request
+```
+{
+    postWriter: String(글 작성자 닉네임)
+}
+```
+## response
+```
+    200 성공
+```
+```
+    400 실패
+```
