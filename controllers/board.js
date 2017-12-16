@@ -33,20 +33,18 @@ module.exports.write = function(req, res) {
 module.exports.loadList = function(req, res) {
     var list = [], cnt = 0;    
     new Promise((resolve, reject) => {
-        con.query('select COUNT(c.post_idx) as count, a.idx, a.content, a.writer, a.check, a.subject, a.created_date from `board` as `a` INNER JOIN `comments` as `c` ON `a`.idx = `c`.post_idx GROUP BY `a`.idx', (e, rs) => {
+        con.query('select COUNT(c.post_idx) as commentCount, a.idx, a.content, a.writer, a.check, a.subject, a.created_date from `board` as `a` INNER JOIN `comments` as `c` ON `a`.idx = `c`.post_idx GROUP BY `a`.idx', (e, rs) => {
             resolve({ e, rs });
         });
     }).then(data => {
         let { e, rs } = data;
         if(e) console.error(e);
         if(!e){
-            for(var { idx, content, writer, check, subject, created_date } of rs){
-                list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img:0, commentCount: rs[0].count });
+            for(var { idx, content, writer, check, subject, created_date, commentCount } of rs){
+                list.push({ idx, content, writer, check, subject, created_date: created_date.toISOString().split("T")[0], img:0, commentCount });
             }
             res.json({ list });
         }
-    }).then(f => {
-        res.json({ list });
     });
 
 }
