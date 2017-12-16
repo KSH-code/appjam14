@@ -80,7 +80,7 @@ module.exports.checkComment = function(req, res){
 
     con.query('update `board` set `check` = ? where writer = ?', [postIdx, postWriter], (e, rs) => {
         if(e != undefined) console.error(e), res.status(400).end();
-        else con.query('update `comments` set `check` = ? where commentIdx = ?', [postIdx, commentIdx], (e, rs) => {
+        else con.query('update `comments` set `check` = ? where idx = ?', [postIdx, commentIdx], (e, rs) => {
             if(e != undefined) console.error(e), res.status(400).end();
             else res.status(200).end();
         });
