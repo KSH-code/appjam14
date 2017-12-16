@@ -29,3 +29,18 @@ module.exports.write = function(req, res) {
         }
     });
 }
+
+module.exports.loadList = function(req, res) {
+    con.query('select * from `board`', (e, rs) => {
+        if(e) console.error(e);
+        if(!e){
+            let list = [];
+            for(let { idx, content, writer, view, check, subject, created_date } of rs){
+                let img = 0;
+                img = fs.readFileSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
+                list.push({ idx, content, writer, view, check, subject, created_date, img });
+            }
+            res.json({ list });
+        }
+    });
+}
