@@ -1,5 +1,3 @@
-import { resolve } from 'dns';
-
 var app, con;
 const fs = require('fs');
 const dir = __dirname.substr(0, __dirname.length - 11);
@@ -9,7 +7,7 @@ module.exports = (_app, _con) => {
 
 module.exports.write = function(req, res) {
     let { id, writer, content, subject } = req.body;
-    let error = true, error_msg = '';
+    let error = false, error_msg = '';
     let { img } = req.files || {};
 
     if(id == undefined || writer == undefined)
@@ -21,7 +19,7 @@ module.exports.write = function(req, res) {
     
     if(error) return res.json({error, error_msg});
 
-    con.query('insert into `board` (`title`, `content`, `writer`, `subject`, `created_date`) values (?, ?, ?, ?, now())', [title, content, writer, subject], (e, rs) => {
+    con.query('insert into `board` (`title`, `content`, `writer`, `subject`, `created_date`) values (?, ?, ?, ?, now())', ['', content, writer, subject], (e, rs) => {
         if(e) console.error(e), error = true, error_msg = '알 수 없는 오류!'
         else res.status(200).json({error}).end();
         if(img && !e){
@@ -45,12 +43,14 @@ module.exports.loadList = function(req, res) {
             for(let { idx, content, writer, check, subject, created_date } of rs){
                 con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rs) => {
                     let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
-                    list.push({ idx: idx.split("T")[0], content, writer, check, subject, created_date, img, commentCount: rs[0].count });
+                    list.push({ idx, content, writer, check, subject, created_date: created_date.split("T")[0], img, commentCount: rs[0].count });
                     cnt++;
-                    if(cnt == rs.length) res.json({ list });
+                    if(cnt == rs.length) resolve(list);
                 });
             }
         }
+    }).then(list => {
+        res.json({ list });
     });
 
 }
