@@ -54,11 +54,22 @@ module.exports.loadList = function(req, res) {
 
 }
 
-module.exports.commentWrite = function(req, res){
+module.exports.writeComment = function(req, res){
     let { writer, content } = req.body;
     let { postIdx } = req.params;
     con.query('insert into `comments` (`post_idx`, `content`, `writer`, `created_date`) values (?, ?, ?, now())', [postIdx, content, writer], (e, rs) => {
         if(!e) res.status(400).end();
         else res.status(200).end();
+    });
+}
+
+module.exports.loadComments = function(req, res){
+    let { postIdx } = req.params;
+    con.query('select * from `comments` where `post_idx` = ?', [postIdx], (e, rs) => {
+        let list = [];
+        for(let { content, writer, check, created_date } of rs){
+            list.push({ content, writer, check, created_date: created_date.toISOString().split("T")[0] });
+        }
+        res.json({ list });
     });
 }

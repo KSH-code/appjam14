@@ -5,6 +5,8 @@ module.exports = app => {
     app.post('/write', userController.isLogin, boardController.write);
     // 글 목록
     app.get('/', boardController.loadList);
+    // 댓글 불러오기
+    app.get('/write/:idx', boardController.loadComments);
     // 댓글 작성
-    app.post('/write/:idx', userController.isLogin, boardController.commentWrite);
+    app.post('/write/:idx', userController.isLogin, boardController.writeComment);
 }

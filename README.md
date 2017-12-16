@@ -94,6 +94,19 @@ file {
     }]
 }
 ```
+# /board/:idx (get) 댓글 불러오기
+## request
+## response
+```
+{
+    list: [{
+        content: String(내용)
+        writer: String(작성자 닉네임)
+        check: Integer(0 기본 1 채택됨)
+        created_date: String(날짜)
+    }]
+}
+```
 # /board/:idx (post) 댓글 작성
 ## request
 ```
