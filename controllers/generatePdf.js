@@ -12,8 +12,8 @@ module.exports.generatePdf = (req, res) => {
     dir = dir.substr(0, dir.length - 12) + '/public/';
     fs.mkdir(`${dir}${id}`, (e) =>{
         fs.writeFile(`${dir}${id}/a.html`, text, 'utf8', (e) => {
-            if(e) res.status(400), console.error(e);
-            else res.status(200);
+            if(e) res.status(400).end(), console.error(e);
+            else res.status(200).end();
         });
     });
 }
