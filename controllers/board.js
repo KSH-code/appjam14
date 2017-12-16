@@ -39,7 +39,7 @@ module.exports.loadList = function(req, res) {
         let { e, rs } = data;
         if(e) console.error(e);
         if(!e){
-            let list = [], cnt = 0;
+            var list = [], cnt = 0;
             for(let { idx, content, writer, check, subject, created_date } of rs){
                 con.query('select count(*) as count from `comments` where `idx` = ?', [idx], (e, rs) => {
                     let img = fs.existsSync(`${dir}public/${idx}/a.png`) ? 1 : 0;
@@ -58,7 +58,7 @@ module.exports.writeComment = function(req, res){
     let { writer, content } = req.body;
     let { idx } = req.params;
     con.query('insert into `comments` (`post_idx`, `content`, `writer`, `created_date`) values (?, ?, ?, now())', [idx, content, writer], (e, rs) => {
-        if(e || rs == undefined || !rs.length) res.status(400).end();
+        if(e || rs == undefined) res.status(400).end();
         else res.status(200).end();
     });
 }

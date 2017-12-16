@@ -24,6 +24,6 @@
     "fs": "0.0.1-security",
     "html5-to-pdf": "^2.2.9",
     "mysql": "^2.15.0",
-    "node-cmd": "^3.0.0"
+    "pdfkitjs": "0.0.5"
   }
 }
