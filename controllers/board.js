@@ -48,7 +48,7 @@ module.exports.loadList = function(req, res) {
                     if(cnt == rs.length) res.json({ list });
                 });
             }
-            if(rs.length == 0) res.json({ list });
+            if(cnt == 0) res.json({ list });
         }
     });
 
