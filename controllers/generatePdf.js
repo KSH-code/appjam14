@@ -1,7 +1,6 @@
 var app, con;
 const fs = require('fs');
-var HTMLToPDF = require('html5-to-pdf');
-
+const HTMLToPDF = require('html5-to-pdf')
 module.exports = (_app, _con) => {
     [app, con] = [_app, _con];
 }
@@ -70,16 +69,18 @@ module.exports.generatePdf = (req, res) => {
 `;
     let dir = __dirname;
     dir = dir.substr(0, dir.length - 12) + '/public/';
-    fs.mkdir(`${dir}${id}`, (e) =>{
-        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
-        fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
-            if(e) res.status(400).end(), console.error(e);
-            else {
-                new HTMLToPDF({ inputPath: `${dir}${id}/temp.html`.toString(), outputPath: `${dir}${id}/auth.pdf`.toString(),
-                }).build((error) => {});
-            }
-        });
-    });
+    // fs.mkdir(`${dir}${id}`, (e) =>{
+    //     if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
+    //     fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
+    //         if(e) res.status(400).end(), console.error(e);
+    //         else {
+    //             const htmlToPDF = new HTMLToPDF({ inputPath: `${dir}${id}/temp.html`.toString(), outputPath: `${dir}${id}/auth.pdf`.toString() })
+    //             htmlToPDF.build((error) => {
+    //               if(error) throw error
+    //             })
+    //         }
+    //     });
+    // });
 
 }
 
