@@ -75,6 +75,8 @@ module.exports.generatePdf = (req, res) => {
         fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
             if(e) res.status(400).end(), console.error(e);
             else {
+                htmlToPdf.setInputEncoding('UTF-8');
+                htmlToPdf.setOutputEncoding('UTF-8');
                 htmlToPdf.convertHTMLFile(`${dir}${id}/temp.html`, `${dir}${id}/auth.pdf`,
                 function (error, success) {
                     if (error) {
