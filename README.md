@@ -136,3 +136,18 @@ file {
 ```
     400 실패
 ```
+# /pdf (post) pdf저장
+## request
+```
+{
+    schoolName: String(학교 이름)
+    name: String(이름)
+}
+```
+## response
+```
+    200 성공
+```
+```
+    400 실패
+```
