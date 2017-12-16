@@ -30,7 +30,7 @@ module.exports.register = function(req, res) {
     }
 
     pw = pw || '';
-    con.query('insert `users` into (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
+    con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
         error = e != undefined;
         if(!e) res.status(200);
         else{
