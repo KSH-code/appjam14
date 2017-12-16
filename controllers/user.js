@@ -8,7 +8,7 @@ module.exports.isLogin = function(req, res, next){
     let { id } = req.body;
     con.query('select * from `users` where `id` = ?', [id], (e, rs) => {
         if(rs) next();
-        else res.status(401);
+        else res.status(401).end();
     });
 }
 
@@ -32,7 +32,7 @@ module.exports.register = function(req, res) {
     pw = pw || '';
     con.query('insert into `users` (`id`, `pw`, `school_code`, `name`, `token`) values (?, ?, ?, ?, ?)', [id, pw, schoolCode, name, token], (e, rs) => {
         error = e != undefined;
-        if(!error) res.status(200);
+        if(!error) res.status(200).end();
         else{
             console.error(e);
             error_msg = '알 수 없는 오류';
@@ -48,13 +48,13 @@ module.exports.login = function(req, res) {
     let { id, pw, token } = req.body;
     if(token){
         con.query('select * from `users` where id = ?', [id], (e, rs) => {
-            if(rs) res.status(200)
-            else res.status(400)
+            if(rs) res.status(200).end();
+            else res.status(400).end();
         });
     }else{
         con.query('select * from `users` where id = ? and pw = ?', [id, pw], (e, rs) => {
-            if(rs) res.status(200)
-            else res.status(400)
+            if(rs) res.status(200).end();
+            else res.status(400).end();
         });
     }
 }
