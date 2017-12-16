@@ -1,7 +1,5 @@
 var app, con;
 const fs = require('fs');
-const HTMLToPDF = require('html5-to-pdf')
-const PDFKit = require('pdfkitjs');
 
 module.exports = (_app, _con) => {
     [app, con] = [_app, _con];
