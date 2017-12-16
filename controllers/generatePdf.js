@@ -25,7 +25,7 @@ module.exports.generatePdf = (req, res) => {
             position: relative;
             width: 488px;
             height: 750px;
-            background:url('background.jpg') no-repeat left top;
+            background:url('http://file.rinc.kr/background.jpg') no-repeat left top;
             padding: 50px;
         }
         .wrap h1{
@@ -71,8 +71,8 @@ module.exports.generatePdf = (req, res) => {
     let dir = __dirname;
     dir = dir.substr(0, dir.length - 12) + '/public/';
     fs.mkdir(`${dir}${id}`, (e) =>{
-        fs.unlinkSync(`${dir}${id}/temp.html`);
-        fs.writeFile(`${dir}${id}/temp.html`, startHtml, 'utf8', (e) => {
+        if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);
+        fs.writeFile(`${dir}${id}/temp.html`, startHtml, (e) => {
             if(e) res.status(400).end(), console.error(e);
             else {
                 htmlToPdf.convertHTMLFile(`${dir}${id}/temp.html`, `${dir}${id}/auth.pdf`,
@@ -83,7 +83,7 @@ module.exports.generatePdf = (req, res) => {
                         res.status(400).end();
                     } else {
                         setInterval(function(){
-                            fs.unlinkSync(`${dir}${id}/temp.html`);
+                            if(fs.existsSync(`${dir}${id}/temp.html`)) fs.unlinkSync(`${dir}${id}/temp.html`);        
                         }, 1000 * 60 * 5);
                         console.log('Woot! Success!');
                         console.log(success);

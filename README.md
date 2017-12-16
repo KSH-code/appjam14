@@ -10,6 +10,10 @@
 ## response data
 ```
     성공 : 200
+    {
+        id: String
+        name: String
+    }
 ```
 ```
     실패 : 400
