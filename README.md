@@ -142,6 +142,7 @@ file {
 {
     schoolName: String(학교 이름)
     name: String(이름)
+    id: String(이름)
 }
 ```
 ## response

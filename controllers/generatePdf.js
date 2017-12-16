@@ -7,7 +7,7 @@ module.exports = (_app, _con) => {
 }
 
 module.exports.generatePdf = (req, res) => {
-    let { name, schoolName } = req.body;
+    let { name, schoolName, id } = req.body;
     let startHtml = 
 `
 <!DOCTYPE html>
